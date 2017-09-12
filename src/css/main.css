@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css?family=VT323');
+
+html {
+  font-family: 'VT323', monospace;
+  font-size: 20px;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.allies-container {
+  width: 200px;
+}
+
+.fighter-ally {
+  text-align: center;
+  margin: 8px 0;
+}
+
+.fighter-image {
+  background-color: #c1e0f0;
+  border: 1px solid black;
+  width: 200px;
+  line-height: 200px;
+}
+
+.bar {
+  text-shadow: 1px 1px #000;
+  color: #fff;
+  width: 100%;
+  border: 1px solid black;
+  border-top: 0px;
+  background-color: #1a1a1a;
+}
+
+.bar-text {
+  position: absolute;
+  margin: auto;
+  width: 200px;
+  line-height: 20px;
+}
+
+.bar-svg {
+  text-align: left;
+  height: 20px;
+}

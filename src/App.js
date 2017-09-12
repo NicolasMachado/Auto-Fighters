@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import FightersLeft from './components/FightersLeft';
+import FightersAllies from './components/FightersAllies';
 import Core from './components/Core';
-import './css/App.css';
 
 class App extends Component {
   render() {
@@ -10,7 +9,7 @@ class App extends Component {
       <div className="App">
         <Core />
         {this.props.titleGame}
-        <FightersLeft />
+        <FightersAllies />
       </div>
     );
   }

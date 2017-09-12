@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import '../css/App.css';
 import {connect} from 'react-redux';
-import {toggleFrameRunning} from '../actions';
+import {toggleFrameRunning, saveCurrentFrame} from '../actions';
 
 class Core extends Component {
 
@@ -29,6 +28,7 @@ class Core extends Component {
   }
 
   stopInterval() {
+    this.props.dispatch(saveCurrentFrame(this.currentFrame))
     clearInterval(this.frameInterval);
     this.frameInterval = null;
   }
