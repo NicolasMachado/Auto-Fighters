@@ -1,13 +1,14 @@
-import {ADD_TICK_FRAME} from '../actions';
+import {TOGGLE_FRAME_RUNNING} from '../actions';
 
 export const initialState = Object.assign({}, {
-  titleGame: 'Auto Fighters'
+  titleGame: 'Auto Fighters',
+  frameRunning: false
 });
 
 export const appReducer = (state=initialState, action) => {
 
-  if (action.type === ADD_TICK_FRAME) {
-    console.log('tick')
+  if (action.type === TOGGLE_FRAME_RUNNING) {
+    return Object.assign({}, state, {frameRunning: !state.frameRunning});
   }
 
   return state;
