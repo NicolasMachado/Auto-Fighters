@@ -5,25 +5,25 @@ import Bar from './Bar';
 class Fighter extends Component {
 
   renderHpBar() {
-    if (this.props.fighter.hp) {
+    if (typeof this.props.fighter.hp !== 'undefined') {
       return <Bar type='hp' maxAmount={this.props.fighter.stats.maxHp} amount={this.props.fighter.hp} />
     }
   }
 
   renderMpBar() {
-    if (this.props.fighter.mp) {
+    if (typeof this.props.fighter.mp !== 'undefined') {
       return <Bar type='mp' maxAmount={this.props.fighter.stats.maxMp} amount={this.props.fighter.mp} />
     }
   }
 
   renderApBar() {
-    if (this.props.fighter.ap) {
+    if (typeof this.props.fighter.ap !== 'undefined') {
       return <Bar type='ap' maxAmount={100} amount={this.props.fighter.ap} />
     }
   }
 
   renderRpBar() {
-    if (this.props.fighter.rp) {
+    if (typeof this.props.fighter.rp !== 'undefined') {
       return <Bar type='rp' maxAmount={100} amount={this.props.fighter.rp} />
     }
   }

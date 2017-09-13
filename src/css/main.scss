@@ -1,5 +1,8 @@
 @import url('https://fonts.googleapis.com/css?family=VT323');
 
+$fighterFrameWidth: 200px;
+$barHeight: 20px;
+
 html {
   font-family: 'VT323', monospace;
   font-size: 20px;
@@ -12,7 +15,7 @@ body {
 }
 
 .allies-container {
-  width: 200px;
+  width: $fighterFrameWidth;
 }
 
 .fighter-ally {
@@ -23,8 +26,8 @@ body {
 .fighter-image {
   background-color: #c1e0f0;
   border: 1px solid black;
-  width: 200px;
-  line-height: 200px;
+  width: $fighterFrameWidth;
+  line-height: $fighterFrameWidth;
 }
 
 .bar {
@@ -40,10 +43,10 @@ body {
   position: absolute;
   margin: auto;
   width: 200px;
-  line-height: 20px;
+  line-height: $barHeight;
 }
 
 .bar-svg {
   text-align: left;
-  height: 20px;
+  height: $barHeight;
 }

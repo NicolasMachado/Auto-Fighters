@@ -1,42 +1,48 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import {toggleFrameRunning, saveCurrentFrame} from '../actions';
+import {toggleFrameRunning, addFrame} from '../actions';
 
 class Core extends Component {
 
   componentWillMount() {
-    this.currentFrame = 0;
     if (this.props.frameRunning) {
       this.startInterval();
     }
   }
 
   componentDidUpdate() {
-    if (this.props.frameRunning) {
+    if (this.props.frameRunning && !this.frameInterval) {
       this.startInterval();
-    } else {
+    }
+    if (!this.props.frameRunning && this.frameInterval) {
+      console.log('stopping interval')
       this.stopInterval();
+    }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.frameInterval);
+  }
+
+  checkFrame() {
+    console.log('checking')
+    if (this.props.currentFrame === this.props.nextActions[0]) {
+      this.stopInterval();
+      this.props.dispatch(toggleFrameRunning(false));
+    } else {
+      this.props.dispatch(addFrame());
     }
   }
 
   startInterval() {
     this.frameInterval = setInterval(() => {
       this.checkFrame();
-      this.currentFrame++;
-      console.log(this.currentFrame);
-    }, 100);
+    }, this.props.frameRate);
   }
 
   stopInterval() {
-    this.props.dispatch(saveCurrentFrame(this.currentFrame))
     clearInterval(this.frameInterval);
     this.frameInterval = null;
-  }
-
-  checkFrame() {
-    if (this.currentFrame === 10) {
-      console.log('action!')
-    }
   }
 
   buttonText() {
@@ -46,6 +52,7 @@ class Core extends Component {
   render() {
     return (
       <div className="core">
+        <div>{this.props.currentFrame}</div>
         <button onClick={() => this.props.dispatch(toggleFrameRunning())}>{this.buttonText()}</button>
       </div>
     );

@@ -1,17 +1,20 @@
-import {TOGGLE_FRAME_RUNNING, SAVE_CURRENT_FRAME} from '../actions';
+import {TOGGLE_FRAME_RUNNING, ADD_FRAME} from '../actions';
 
 export const initialState = Object.assign({}, {
   titleGame: 'Auto Fighters',
   currentFrame: 0,
+  frameRate: 100,
   frameRunning: false,
+  nextActions: [],
   fighters: {
     allies: [
       {
         name: 'Ally number 1',
         hp: 54,
         mp: 32,
-        ap: 74,
+        ap: 24,
         stats: {
+          speed: 1.2,
           maxHp: 123,
           maxMp: 73
         }
@@ -20,8 +23,9 @@ export const initialState = Object.assign({}, {
         name: 'Ally number 2',
         hp: 32,
         rp: 27,
-        ap: 84,
+        ap: 42,
         stats: {
+          speed: .5,
           maxHp: 97
         }
       }
@@ -33,11 +37,23 @@ export const initialState = Object.assign({}, {
 export const appReducer = (state=initialState, action) => {
 
   if (action.type === TOGGLE_FRAME_RUNNING) {
-    return Object.assign({}, state, {frameRunning: !state.frameRunning});
+    return Object.assign({}, state, {frameRunning: action.bool || !state.frameRunning});
   }
 
-  if (action.type === SAVE_CURRENT_FRAME) {
-    return Object.assign({}, state, {currentFrame: action.currentFrame});
+  if (action.type === ADD_FRAME) {
+    // Add action points
+    const allies = state.fighters.allies.map((ally) => {
+      let ap = ally.ap + ally.stats.speed > 100 ? 100 : ally.ap + ally.stats.speed;
+      ap = ap < 0 ? 0 : ap;
+      return Object.assign({}, ally, { ap });
+    });
+
+    return Object.assign({}, state, {
+      currentFrame: state.currentFrame + 1,
+      fighters: {
+        allies
+      }
+    });
   }
 
   return state;

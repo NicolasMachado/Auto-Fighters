@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
+import {toggleFrameRunning} from '../actions';
 
 class Bar extends Component {
+
+  componentDidUpdate() {
+    if (this.props.type === 'ap' && this.props.amount >= 100) {
+      this.props.dispatch(toggleFrameRunning(false));
+    }
+  }
 
   getBarColor() {
     if (this.props.type === 'hp') {
@@ -23,7 +30,7 @@ class Bar extends Component {
     return (
       <div className="bar">
         <div className="bar-text">
-          {this.props.amount} / {this.props.maxAmount} {this.props.type.toUpperCase()}
+          {Math.round(this.props.amount)} / {this.props.maxAmount} {this.props.type.toUpperCase()}
         </div>
         <div className="bar-svg">
           <svg width={this.getPercentWidth()} height="100%">
