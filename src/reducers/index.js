@@ -9,6 +9,7 @@ export const initialState = Object.assign({}, {
   fighters: {
     allies: [
       {
+        id: 1,
         name: 'Ally number 1',
         hp: 54,
         mp: 32,
@@ -20,6 +21,7 @@ export const initialState = Object.assign({}, {
         }
       },
       {
+        id: 2,
         name: 'Ally number 2',
         hp: 32,
         rp: 27,
@@ -30,31 +32,66 @@ export const initialState = Object.assign({}, {
         }
       }
     ],
-    ennemies: []
+    enemies: [
+      {
+        id: 3,
+        name: 'Enemy number 1',
+        hp: 34,
+        mp: 52,
+        ap: 13,
+        stats: {
+          speed: .7,
+          maxHp: 241,
+          maxMp: 120
+        }
+      },
+      {
+        id: 4,
+        name: 'Enemy number 2',
+        hp: 72,
+        rp: 54,
+        ap: 63,
+        stats: {
+          speed: 1.5,
+          maxHp: 112
+        }
+      }
+
+    ]
   }
 });
 
 export const appReducer = (state=initialState, action) => {
 
   if (action.type === TOGGLE_FRAME_RUNNING) {
-    return Object.assign({}, state, {frameRunning: action.bool || !state.frameRunning});
+    const frameRunning = typeof action.bool === 'undefined' ? !(state.frameRunning) : action.bool;
+    console.log(frameRunning);
+    return Object.assign({}, state, {frameRunning});
   }
 
   if (action.type === ADD_FRAME) {
-    // Add action points
-    const allies = state.fighters.allies.map((ally) => {
-      let ap = ally.ap + ally.stats.speed > 100 ? 100 : ally.ap + ally.stats.speed;
-      ap = ap < 0 ? 0 : ap;
-      return Object.assign({}, ally, { ap });
-    });
+    const allies = addApPoints(state.fighters.allies);
+    const enemies = addApPoints(state.fighters.enemies);
 
     return Object.assign({}, state, {
       currentFrame: state.currentFrame + 1,
       fighters: {
-        allies
+        allies,
+        enemies
       }
     });
   }
 
   return state;
+}
+
+function addApPoints(group) {
+  // Add action points
+  const groupReturn = group.map((fighter) => {
+    let ap = fighter.ap + fighter.stats.speed > 100 ? 100 : fighter.ap + fighter.stats.speed;
+    ap = ap < 0 ? 0 : ap;
+    return {...fighter, ap};
+  });
+
+  return groupReturn
 }

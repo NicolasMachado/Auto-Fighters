@@ -6,6 +6,7 @@ class Bar extends Component {
 
   componentDidUpdate() {
     if (this.props.type === 'ap' && this.props.amount >= 100) {
+      console.log('ap max')
       this.props.dispatch(toggleFrameRunning(false));
     }
   }
@@ -22,18 +23,14 @@ class Bar extends Component {
     }
   }
 
-  getPercentWidth() {
-    return ((this.props.amount/this.props.maxAmount)*100) + '%';
-  }
-
   render() {
     return (
       <div className="bar">
         <div className="bar-text">
           {Math.round(this.props.amount)} / {this.props.maxAmount} {this.props.type.toUpperCase()}
         </div>
-        <div className="bar-svg">
-          <svg width={this.getPercentWidth()} height="100%">
+        <div className={"bar-svg " + this.props.classBarSide}>
+          <svg width={((this.props.amount/this.props.maxAmount)*100) + '%'} height="100%">
             <rect width="100%" height="100%" style={{
               'fill': this.getBarColor()
             }} />

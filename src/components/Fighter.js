@@ -6,25 +6,41 @@ class Fighter extends Component {
 
   renderHpBar() {
     if (typeof this.props.fighter.hp !== 'undefined') {
-      return <Bar type='hp' maxAmount={this.props.fighter.stats.maxHp} amount={this.props.fighter.hp} />
+      return <Bar
+        type='hp'
+        maxAmount={this.props.fighter.stats.maxHp}
+        classBarSide={this.props.classBarSide}
+        amount={this.props.fighter.hp} />
     }
   }
 
   renderMpBar() {
     if (typeof this.props.fighter.mp !== 'undefined') {
-      return <Bar type='mp' maxAmount={this.props.fighter.stats.maxMp} amount={this.props.fighter.mp} />
+      return <Bar
+        type='mp'
+        maxAmount={this.props.fighter.stats.maxMp}
+        classBarSide={this.props.classBarSide}
+        amount={this.props.fighter.mp} />
     }
   }
 
   renderApBar() {
     if (typeof this.props.fighter.ap !== 'undefined') {
-      return <Bar type='ap' maxAmount={100} amount={this.props.fighter.ap} />
+      return <Bar
+        type='ap'
+        maxAmount={100}
+        classBarSide={this.props.classBarSide}
+        amount={this.props.fighter.ap} />
     }
   }
 
   renderRpBar() {
     if (typeof this.props.fighter.rp !== 'undefined') {
-      return <Bar type='rp' maxAmount={100} amount={this.props.fighter.rp} />
+      return <Bar
+        type='rp'
+        maxAmount={100}
+        amount={this.props.fighter.rp}
+        classBarSide={this.props.classBarSide} />
     }
   }
 

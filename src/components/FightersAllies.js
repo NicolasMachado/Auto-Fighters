@@ -4,11 +4,12 @@ import {connect} from 'react-redux';
 
 class FightersAllies extends Component {
 
-  renderAllied() {
+  renderAllies() {
     const allies = this.props.fighters.allies.map((ally) => {
       return (<Fighter
-          key = {ally.name}
+          key = {ally.id}
           fighter = {ally}
+          classBarSide='ally-bar'
         />)
     })
     return allies
@@ -17,7 +18,7 @@ class FightersAllies extends Component {
   render() {
     return (
       <div className="allies-container">
-        {this.renderAllied()}
+        {this.renderAllies()}
       </div>
     );
   }

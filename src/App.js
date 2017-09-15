@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import FightersAllies from './components/FightersAllies';
+import FightersEnemies from './components/FightersEnemies';
+import CombatLog from './components/CombatLog';
 import Core from './components/Core';
 
 class App extends Component {
@@ -9,7 +11,11 @@ class App extends Component {
       <div className="App">
         <Core />
         {this.props.titleGame}
-        <FightersAllies />
+        <div className="all-fighters">
+          <FightersAllies />
+          <CombatLog />
+          <FightersEnemies />
+        </div>
       </div>
     );
   }

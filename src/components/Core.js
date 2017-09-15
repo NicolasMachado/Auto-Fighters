@@ -13,9 +13,7 @@ class Core extends Component {
   componentDidUpdate() {
     if (this.props.frameRunning && !this.frameInterval) {
       this.startInterval();
-    }
-    if (!this.props.frameRunning && this.frameInterval) {
-      console.log('stopping interval')
+    } else if (!this.props.frameRunning && this.frameInterval) {
       this.stopInterval();
     }
   }
@@ -25,11 +23,10 @@ class Core extends Component {
   }
 
   checkFrame() {
-    console.log('checking')
-    if (this.props.currentFrame === this.props.nextActions[0]) {
+    if (this.props.nextActions.length > 0 && this.props.currentFrame === this.props.nextActions[0]) {
       this.stopInterval();
       this.props.dispatch(toggleFrameRunning(false));
-    } else {
+    } else if (this.props.frameRunning) {
       this.props.dispatch(addFrame());
     }
   }

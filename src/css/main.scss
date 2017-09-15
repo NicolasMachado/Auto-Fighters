@@ -14,7 +14,27 @@ body {
   padding: 0;
 }
 
+.all-fighters {
+  width: 100%;
+}
+
 .allies-container {
+  margin: auto;
+  display: inline-block;
+  width: $fighterFrameWidth;
+}
+
+.combat-log {
+  text-align: center;
+  min-width: 200px;
+  vertical-align: top;
+  display: inline-block;
+  margin: 16px 32px;
+}
+
+.enemies-container {
+  margin: auto;
+  display: inline-block;
   width: $fighterFrameWidth;
 }
 
@@ -49,4 +69,7 @@ body {
 .bar-svg {
   text-align: left;
   height: $barHeight;
+  &.enemy-bar {
+    text-align: right;
+  }
 }
