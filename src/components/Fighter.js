@@ -9,6 +9,7 @@ class Fighter extends Component {
       return <Bar
         type='hp'
         maxAmount={this.props.fighter.stats.maxHp}
+        ownerName={this.props.fighter.name}
         classBarSide={this.props.classBarSide}
         amount={this.props.fighter.hp} />
     }
@@ -19,6 +20,7 @@ class Fighter extends Component {
       return <Bar
         type='mp'
         maxAmount={this.props.fighter.stats.maxMp}
+        ownerName={this.props.fighter.name}
         classBarSide={this.props.classBarSide}
         amount={this.props.fighter.mp} />
     }
@@ -29,6 +31,7 @@ class Fighter extends Component {
       return <Bar
         type='ap'
         maxAmount={100}
+        ownerName={this.props.fighter.name}
         classBarSide={this.props.classBarSide}
         amount={this.props.fighter.ap} />
     }
@@ -39,6 +42,7 @@ class Fighter extends Component {
       return <Bar
         type='rp'
         maxAmount={100}
+        ownerName={this.props.fighter.name}
         amount={this.props.fighter.rp}
         classBarSide={this.props.classBarSide} />
     }

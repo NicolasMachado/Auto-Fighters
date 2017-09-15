@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import {toggleFrameRunning} from '../actions';
+import {toggleFrameRunning, addLogEntry} from '../actions';
 
 class Bar extends Component {
 
   componentDidUpdate() {
-    if (this.props.type === 'ap' && this.props.amount >= 100) {
-      console.log('ap max')
+    if (this.props.type === 'ap' && this.props.amount >= 100 && this.props.frameRunning) {
+      this.props.dispatch(addLogEntry("Max AP reached for " + this.props.ownerName));
       this.props.dispatch(toggleFrameRunning(false));
     }
   }

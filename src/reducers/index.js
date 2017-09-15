@@ -1,4 +1,4 @@
-import {TOGGLE_FRAME_RUNNING, ADD_FRAME} from '../actions';
+import {TOGGLE_FRAME_RUNNING, ADD_FRAME, ADD_LOG_ENTRY} from '../actions';
 
 export const initialState = Object.assign({}, {
   titleGame: 'Auto Fighters',
@@ -6,6 +6,7 @@ export const initialState = Object.assign({}, {
   frameRate: 100,
   frameRunning: false,
   nextActions: [],
+  log: [],
   fighters: {
     allies: [
       {
@@ -65,11 +66,10 @@ export const appReducer = (state=initialState, action) => {
 
   if (action.type === TOGGLE_FRAME_RUNNING) {
     const frameRunning = typeof action.bool === 'undefined' ? !(state.frameRunning) : action.bool;
-    console.log(frameRunning);
     return Object.assign({}, state, {frameRunning});
   }
 
-  if (action.type === ADD_FRAME) {
+  else if (action.type === ADD_FRAME) {
     const allies = addApPoints(state.fighters.allies);
     const enemies = addApPoints(state.fighters.enemies);
 
@@ -80,6 +80,11 @@ export const appReducer = (state=initialState, action) => {
         enemies
       }
     });
+  }
+
+  else if (action.type === ADD_LOG_ENTRY) {
+    const log = [...state.log, action.message];
+    return Object.assign({}, state, {log});
   }
 
   return state;
