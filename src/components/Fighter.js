@@ -4,48 +4,44 @@ import Bar from './Bar';
 
 class Fighter extends Component {
 
-  renderHpBar() {
-    if (typeof this.props.fighter.hp !== 'undefined') {
-      return <Bar
-        type='hp'
-        maxAmount={this.props.fighter.stats.maxHp}
-        ownerName={this.props.fighter.name}
-        classBarSide={this.props.classBarSide}
-        amount={this.props.fighter.hp} />
-    }
-  }
+  renderBars() {
+    const barTypes = [
+      {
+        type: 'hp',
+        maxAmount: this.props.fighter.stats.maxHp,
+        amount: this.props.fighter.hp
+      },
+      {
+        type: 'mp',
+        maxAmount: this.props.fighter.stats.maxMp,
+        amount: this.props.fighter.mp
+      },
+      {
+        type: 'rp',
+        maxAmount: 100,
+        amount: this.props.fighter.rp
+      },
+      {
+        type: 'ap',
+        maxAmount: 100,
+        amount: this.props.fighter.ap
+      }
+    ];
 
-  renderMpBar() {
-    if (typeof this.props.fighter.mp !== 'undefined') {
-      return <Bar
-        type='mp'
-        maxAmount={this.props.fighter.stats.maxMp}
-        ownerName={this.props.fighter.name}
-        classBarSide={this.props.classBarSide}
-        amount={this.props.fighter.mp} />
-    }
-  }
-
-  renderApBar() {
-    if (typeof this.props.fighter.ap !== 'undefined') {
-      return <Bar
-        type='ap'
-        maxAmount={100}
-        ownerName={this.props.fighter.name}
-        classBarSide={this.props.classBarSide}
-        amount={this.props.fighter.ap} />
-    }
-  }
-
-  renderRpBar() {
-    if (typeof this.props.fighter.rp !== 'undefined') {
-      return <Bar
-        type='rp'
-        maxAmount={100}
-        ownerName={this.props.fighter.name}
-        amount={this.props.fighter.rp}
-        classBarSide={this.props.classBarSide} />
-    }
+    const bars = barTypes.map((bar, i) => {
+      let myBar;
+      if (typeof bar.amount !== 'undefined') {
+        myBar =  <Bar
+          key={bar.type}
+          type={bar.type}
+          maxAmount={bar.maxAmount}
+          ownerName={this.props.fighter.name}
+          classBarSide={this.props.classBarSide}
+          amount={bar.amount} />
+      }
+      return myBar
+    });
+    return bars
   }
 
   render() {
@@ -54,10 +50,7 @@ class Fighter extends Component {
         <div className="fighter-image">
           {this.props.fighter.name}
         </div>
-        {this.renderHpBar()}
-        {this.renderMpBar()}
-        {this.renderRpBar()}
-        {this.renderApBar()}
+        {this.renderBars()}
       </div>
     );
   }

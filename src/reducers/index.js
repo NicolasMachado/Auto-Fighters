@@ -6,6 +6,7 @@ export const initialState = Object.assign({}, {
   frameRate: 100,
   frameRunning: false,
   nextActions: [],
+  currentActor: null,
   log: [],
   fighters: {
     allies: [

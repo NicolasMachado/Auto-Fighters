@@ -10,7 +10,6 @@ class App extends Component {
     return (
       <div className="App">
         <Core />
-        {this.props.titleGame}
         <div className="all-fighters">
           <FightersAllies />
           <CombatLog />

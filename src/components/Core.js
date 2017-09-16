@@ -49,6 +49,7 @@ class Core extends Component {
   render() {
     return (
       <div className="core">
+        {this.props.titleGame}
         <div>{this.props.currentFrame}</div>
         <button onClick={() => this.props.dispatch(toggleFrameRunning())}>{this.buttonText()}</button>
       </div>
