@@ -14,3 +14,9 @@ export const addLogEntry = (message) => ({
   type: ADD_LOG_ENTRY,
   message
 });
+
+export const START_TURN = 'START_TURN';
+export const startTurn = (fighterId) => ({
+  type: START_TURN,
+  fighterId
+});

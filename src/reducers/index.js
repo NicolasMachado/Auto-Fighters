@@ -1,4 +1,4 @@
-import {TOGGLE_FRAME_RUNNING, ADD_FRAME, ADD_LOG_ENTRY} from '../actions';
+import {TOGGLE_FRAME_RUNNING, ADD_FRAME, ADD_LOG_ENTRY, START_TURN} from '../actions';
 
 export const initialState = Object.assign({}, {
   titleGame: 'Auto Fighters',
@@ -70,6 +70,12 @@ export const appReducer = (state=initialState, action) => {
     return Object.assign({}, state, {frameRunning});
   }
 
+  else if (action.type === START_TURN) {
+    const fighter = findFighterById(state, action.fighterId);
+    console.log(fighter)
+    return Object.assign({}, state, {});
+  }
+
   else if (action.type === ADD_FRAME) {
     const allies = addApPoints(state.fighters.allies);
     const enemies = addApPoints(state.fighters.enemies);
@@ -100,4 +106,26 @@ function addApPoints(group) {
   });
 
   return groupReturn
+}
+
+function findFighterById(state, id) {
+  let fighter;
+
+  for (let i=0; i<state.fighters.allies.length; i++) {
+    if (id === state.fighters.allies[i].id) {
+      fighter = state.fighters.allies[i];
+    }
+  }
+
+  for (let i=0; i<state.fighters.enemies.length; i++) {
+    if (id === state.fighters.enemies[i].id) {
+      fighter = state.fighters.enemies[i];
+    }
+  }
+
+  if (fighter) {
+    return fighter
+  } else {
+    console.log("couldn't find fighter with id", id)
+  }
 }
