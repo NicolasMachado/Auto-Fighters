@@ -36,7 +36,7 @@ class Fighter extends Component {
           type={bar.type}
           maxAmount={bar.maxAmount}
           ownerName={this.props.fighter.name}
-          ownerId={this.props.fighter.id}
+          ownerId={this.props.fighterId}
           classBarSide={this.props.classBarSide}
           amount={bar.amount} />
       }

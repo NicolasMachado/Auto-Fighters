@@ -1,4 +1,5 @@
 import {TOGGLE_FRAME_RUNNING, ADD_FRAME, ADD_LOG_ENTRY, START_TURN} from '../actions';
+import clone from 'clone';
 
 export const initialState = Object.assign({}, {
   titleGame: 'Auto Fighters',
@@ -9,58 +10,55 @@ export const initialState = Object.assign({}, {
   currentActor: null,
   log: [],
   fighters: {
-    allies: [
-      {
-        id: 1,
-        name: 'Ally number 1',
-        hp: 54,
-        mp: 32,
-        ap: 24,
-        stats: {
-          speed: 1.2,
-          maxHp: 123,
-          maxMp: 73
-        }
-      },
-      {
-        id: 2,
-        name: 'Ally number 2',
-        hp: 32,
-        rp: 27,
-        ap: 42,
-        stats: {
-          speed: .5,
-          maxHp: 97
-        }
+    11: {
+      side: 'ally',
+      name: 'Ally number 1',
+      hp: 54,
+      mp: 32,
+      ap: 24,
+      stats: {
+        speed: 1.2,
+        maxHp: 123,
+        maxMp: 73
       }
-    ],
-    enemies: [
-      {
-        id: 3,
-        name: 'Enemy number 1',
-        hp: 34,
-        mp: 52,
-        ap: 13,
-        stats: {
-          speed: .7,
-          maxHp: 241,
-          maxMp: 120
-        }
-      },
-      {
-        id: 4,
-        name: 'Enemy number 2',
-        hp: 72,
-        rp: 54,
-        ap: 63,
-        stats: {
-          speed: 1.5,
-          maxHp: 112
-        }
+    },
+    22: {
+      side: 'ally',
+      name: 'Ally number 2',
+      hp: 32,
+      rp: 27,
+      ap: 42,
+      stats: {
+        speed: .5,
+        maxHp: 97
       }
-
-    ]
-  }
+    },
+    66: {
+      side: 'enemy',
+      name: 'Enemy number 1',
+      hp: 34,
+      mp: 52,
+      ap: 13,
+      stats: {
+        speed: .7,
+        maxHp: 241,
+        maxMp: 120
+      }
+    },
+    77: {
+      side: 'enemy',
+      name: 'Enemy number 2',
+      hp: 72,
+      rp: 54,
+      ap: 63,
+      stats: {
+        speed: 1.5,
+        maxHp: 112
+      }
+    }
+  },
+  alliesList: [11, 22],
+  enemiesList: [66, 77]
 });
 
 export const appReducer = (state=initialState, action) => {
@@ -71,21 +69,16 @@ export const appReducer = (state=initialState, action) => {
   }
 
   else if (action.type === START_TURN) {
-    const fighter = findFighterById(state, action.fighterId);
-    console.log(fighter)
-    return Object.assign({}, state, {});
+    const fighters = modifyFighterAttribute(state, action.fighterId, 'ap', 0);
+    return Object.assign({}, state, {fighters});
   }
 
   else if (action.type === ADD_FRAME) {
-    const allies = addApPoints(state.fighters.allies);
-    const enemies = addApPoints(state.fighters.enemies);
+    const fighters = addApPoints(state);
 
     return Object.assign({}, state, {
       currentFrame: state.currentFrame + 1,
-      fighters: {
-        allies,
-        enemies
-      }
+      fighters
     });
   }
 
@@ -97,35 +90,19 @@ export const appReducer = (state=initialState, action) => {
   return state;
 }
 
-function addApPoints(group) {
+function addApPoints(state) {
   // Add action points
-  const groupReturn = group.map((fighter) => {
-    let ap = fighter.ap + fighter.stats.speed > 100 ? 100 : fighter.ap + fighter.stats.speed;
-    ap = ap < 0 ? 0 : ap;
-    return {...fighter, ap};
-  });
+  let fighters = clone(state.fighters);
+  const listAll = [...state.alliesList, ...state.enemiesList];
 
-  return groupReturn
+  listAll.forEach((fighter) => {
+    fighters[fighter].ap = fighters[fighter].ap + fighters[fighter].stats.speed;
+  })
+  return fighters
 }
 
-function findFighterById(state, id) {
-  let fighter;
-
-  for (let i=0; i<state.fighters.allies.length; i++) {
-    if (id === state.fighters.allies[i].id) {
-      fighter = state.fighters.allies[i];
-    }
-  }
-
-  for (let i=0; i<state.fighters.enemies.length; i++) {
-    if (id === state.fighters.enemies[i].id) {
-      fighter = state.fighters.enemies[i];
-    }
-  }
-
-  if (fighter) {
-    return fighter
-  } else {
-    console.log("couldn't find fighter with id", id)
-  }
+function modifyFighterAttribute(state, id, attr, value) {
+  let fighters = clone(state.fighters);
+  fighters[id][attr] = value;
+  return fighters
 }
