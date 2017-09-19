@@ -4,7 +4,7 @@ import clone from 'clone';
 export const initialState = Object.assign({}, {
   titleGame: 'Auto Fighters',
   currentFrame: 0,
-  frameRate: 100,
+  frameRate: 500,
   frameRunning: false,
   nextActions: [],
   currentActor: null,
@@ -69,17 +69,17 @@ export const appReducer = (state=initialState, action) => {
   }
 
   else if (action.type === START_TURN) {
-    const fighters = modifyFighterAttribute(state, action.fighterId, 'ap', 0);
-    return Object.assign({}, state, {fighters});
+    let clonedState = clone(state);
+    clonedState = modifyFighterAttribute(clonedState, action.fighterId, 'ap', 0);
+    clonedState = modifyFighterAttribute(clonedState, action.fighterId, 'hp', 0);
+    return Object.assign({}, state, {...clonedState});
   }
 
   else if (action.type === ADD_FRAME) {
-    const fighters = addApPoints(state);
+    let clonedState = clone(state);
+    clonedState = addApPoints(clonedState);
 
-    return Object.assign({}, state, {
-      currentFrame: state.currentFrame + 1,
-      fighters
-    });
+    return Object.assign({}, state, {...clonedState});
   }
 
   else if (action.type === ADD_LOG_ENTRY) {
@@ -90,19 +90,17 @@ export const appReducer = (state=initialState, action) => {
   return state;
 }
 
-function addApPoints(state) {
+function addApPoints(clonedState) {
   // Add action points
-  let fighters = clone(state.fighters);
-  const listAll = [...state.alliesList, ...state.enemiesList];
-
-  listAll.forEach((fighter) => {
-    fighters[fighter].ap = fighters[fighter].ap + fighters[fighter].stats.speed;
+  const listAll = [...clonedState.alliesList, ...clonedState.enemiesList];
+  listAll.forEach((fighterId) => {
+    clonedState.fighters[fighterId].ap = clonedState.fighters[fighterId].ap + clonedState.fighters[fighterId].stats.speed;
   })
-  return fighters
+  clonedState.currentFrame++;
+  return clonedState
 }
 
-function modifyFighterAttribute(state, id, attr, value) {
-  let fighters = clone(state.fighters);
-  fighters[id][attr] = value;
-  return fighters
+function modifyFighterAttribute(clonedState, id, attr, value) {
+  clonedState.fighters[id][attr] = value;
+  return clonedState
 }
