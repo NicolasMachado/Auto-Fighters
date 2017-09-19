@@ -4,7 +4,7 @@ import clone from 'clone';
 export const initialState = Object.assign({}, {
   titleGame: 'Auto Fighters',
   currentFrame: 0,
-  frameRate: 500,
+  frameRate: 100,
   frameRunning: false,
   nextActions: [],
   currentActor: null,
@@ -71,7 +71,7 @@ export const appReducer = (state=initialState, action) => {
   else if (action.type === START_TURN) {
     let clonedState = clone(state);
     clonedState = modifyFighterAttribute(clonedState, action.fighterId, 'ap', 0);
-    clonedState = modifyFighterAttribute(clonedState, action.fighterId, 'hp', 0);
+    clonedState = modifyFighterAttribute(clonedState, action.fighterId, 'hp', Math.random()*100);
     return Object.assign({}, state, {...clonedState});
   }
 

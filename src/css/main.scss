@@ -61,9 +61,11 @@ body {
   border: 1px solid black;
   border-top: 0px;
   background-color: #1a1a1a;
+  height: $barHeight;
 }
 
 .bar-text {
+  z-index: 30;
   position: absolute;
   margin: auto;
   width: 200px;
@@ -71,9 +73,22 @@ body {
 }
 
 .bar-svg {
+  z-index: 20;
+  position: relative;
+  top: -$barHeight;
   text-align: left;
   height: $barHeight;
   &.enemy-bar {
-    text-align: right;
+  text-align: right;
+  }
+}
+
+.bar-svg-changing {
+  z-index: 10;
+  position: relative;
+  text-align: left;
+  height: $barHeight;
+  &.enemy-bar {
+  text-align: right;
   }
 }
