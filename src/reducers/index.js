@@ -1,4 +1,4 @@
-import {TOGGLE_FRAME_RUNNING, ADD_FRAME, ADD_LOG_ENTRY, START_TURN} from '../actions';
+import {TOGGLE_FRAME_RUNNING, ADD_FRAME, ADD_LOG_ENTRY, MODIFY_ATTRIBUTE} from '../actions';
 import clone from 'clone';
 
 export const initialState = Object.assign({}, {
@@ -68,10 +68,9 @@ export const appReducer = (state=initialState, action) => {
     return Object.assign({}, state, {frameRunning});
   }
 
-  else if (action.type === START_TURN) {
+  else if (action.type === MODIFY_ATTRIBUTE) {
     let clonedState = clone(state);
-    clonedState = modifyFighterAttribute(clonedState, action.fighterId, 'ap', 0);
-    clonedState = modifyFighterAttribute(clonedState, action.fighterId, 'hp', Math.random()*100);
+    clonedState.fighters[action.fighterId][action.attribute] = action.amount;
     return Object.assign({}, state, {...clonedState});
   }
 
@@ -97,10 +96,5 @@ function addApPoints(clonedState) {
     clonedState.fighters[fighterId].ap = clonedState.fighters[fighterId].ap + clonedState.fighters[fighterId].stats.speed;
   })
   clonedState.currentFrame++;
-  return clonedState
-}
-
-function modifyFighterAttribute(clonedState, id, attr, value) {
-  clonedState.fighters[id][attr] = value;
   return clonedState
 }

@@ -16,7 +16,15 @@ export const addLogEntry = (message) => ({
 });
 
 export const START_TURN = 'START_TURN';
-export const startTurn = (fighterId) => ({
+export const startTurn = (state) => ({
   type: START_TURN,
-  fighterId
+  state
+});
+
+export const MODIFY_ATTRIBUTE = 'MODIFY_ATTRIBUTE';
+export const modifyAttribute = (fighterId, attribute, amount) => ({
+  type: MODIFY_ATTRIBUTE,
+  fighterId,
+  attribute,
+  amount
 });

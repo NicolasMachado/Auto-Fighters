@@ -15,7 +15,7 @@ export class Bar extends Component {
     if (this.props.type === 'ap' && this.props.amount >= 100 && this.props.frameRunning) {
       this.props.dispatch(addLogEntry("Max AP reached for " + this.props.ownerName));
       this.props.dispatch(toggleFrameRunning(false));
-      this.props.dispatch(startTurn(this.props.ownerId));
+      this.props.dispatch(startTurn(this.props));
     }
   }
 
@@ -33,16 +33,14 @@ export class Bar extends Component {
   }
 
   triggerBarChangeAnimation(formerValue, newValue) {
-    console.log("from", formerValue, "to", newValue)
     if (formerValue >= newValue) {
       this.changedBarValue = (formerValue/this.props.maxAmount)*100;
       this.formerValue = (formerValue/this.props.maxAmount)*100;
       this.newValue = (newValue/this.props.maxAmount)*100;
-      const rate = formerValue/newValue/2;
+      const rate = (formerValue - newValue)/20;
       setTimeout(() => {
         let timerChange = setInterval(() => {
           this.changedBarValue -= rate;
-          this.forceUpdate();
           if(this.changedBarValue <= this.newValue || this.changedBarValue <= 0 || this.changedBarValue > this.props.maxAmount) {
             this.changedBarValue = 0;
             this.formerValue = 0;
@@ -50,6 +48,7 @@ export class Bar extends Component {
             this.forceUpdate();
             clearInterval(timerChange);
           }
+          this.forceUpdate();
         }, 15)
       }, 700);
     }
@@ -71,7 +70,7 @@ export class Bar extends Component {
     return (
       <div className="bar">
         <div className="bar-text">
-          {Math.round(this.props.amount)} / {this.props.maxAmount} {this.props.type.toUpperCase()}
+          {Math.round(this.props.amount)} / {Math.round(this.props.maxAmount)} {this.props.type.toUpperCase()}
         </div>
         <div className={"bar-svg-changing " + this.props.classBarSide}>
           <SvgBarChange barWidth={this.changedBarValue} />
