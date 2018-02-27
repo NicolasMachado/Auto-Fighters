@@ -1,65 +1,20 @@
 import {TOGGLE_FRAME_RUNNING, ADD_FRAME, ADD_LOG_ENTRY, MODIFY_ATTRIBUTE} from '../actions';
 import clone from 'clone';
+import {mockReducer} from '../mockData';
 
-export const initialState = Object.assign({}, {
-  titleGame: 'Auto Fighters',
+export const initialState = Object.assign({
+  titleGame: 'AF',
   currentFrame: 0,
   frameRate: 100,
   frameRunning: false,
   nextActions: [],
   currentActor: null,
   log: [],
-  fighters: {
-    11: {
-      side: 'ally',
-      name: 'Ally number 1',
-      hp: 54,
-      mp: 32,
-      ap: 24,
-      stats: {
-        speed: 1.2,
-        maxHp: 123,
-        maxMp: 73
-      }
-    },
-    22: {
-      side: 'ally',
-      name: 'Ally number 2',
-      hp: 32,
-      rp: 27,
-      ap: 42,
-      stats: {
-        speed: .5,
-        maxHp: 97
-      }
-    },
-    66: {
-      side: 'enemy',
-      name: 'Enemy number 1',
-      hp: 34,
-      mp: 52,
-      ap: 13,
-      stats: {
-        speed: .7,
-        maxHp: 241,
-        maxMp: 120
-      }
-    },
-    77: {
-      side: 'enemy',
-      name: 'Enemy number 2',
-      hp: 72,
-      rp: 54,
-      ap: 63,
-      stats: {
-        speed: 1.5,
-        maxHp: 112
-      }
-    }
-  },
-  alliesList: [11, 22],
-  enemiesList: [66, 77]
-});
+  maxLogEntries: 5,
+  fighters: {},
+  alliesList: [],
+  enemiesList: []
+}, {...mockReducer});
 
 export const appReducer = (state=initialState, action) => {
 
@@ -82,7 +37,12 @@ export const appReducer = (state=initialState, action) => {
   }
 
   else if (action.type === ADD_LOG_ENTRY) {
-    const log = [...state.log, action.message];
+    const logCopy = clone(state.log);
+    // purge log if too long
+    if (logCopy.length >= state.maxLogEntries) {
+      logCopy.shift();
+    }
+    const log = [...logCopy, action.message];
     return Object.assign({}, state, {log});
   }
 

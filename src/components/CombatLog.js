@@ -13,7 +13,7 @@ class CombatLog extends Component {
   render() {
     return (
       <div className="combat-log">
-        <h2>Combat Log</h2>
+        <h2>Log</h2>
         {this.returnLog()}
       </div>
     );
