@@ -1,25 +1,13 @@
 import React, { Component } from 'react';
-import Fighter from './Fighter'
 import {connect} from 'react-redux';
+import {renderFighterFrame} from '../common';
 
 class FightersAllies extends Component {
-
-  renderAllies() {
-    const allies = this.props.alliesList.map((key) => {
-      return (<Fighter
-          key = {key}
-          fighterId={key}
-          fighter = {this.props.fighters[key]}
-          classBarSide='ally-bar'
-        />)
-    })
-    return allies
-  }
 
   render() {
     return (
       <div className="allies-container">
-        {this.renderAllies()}
+        {renderFighterFrame(this.props.fighters, 'ally')}
       </div>
     );
   }

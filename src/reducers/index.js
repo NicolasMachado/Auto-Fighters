@@ -11,9 +11,7 @@ export const initialState = Object.assign({
   currentActor: null,
   log: [],
   maxLogEntries: 5,
-  fighters: {},
-  alliesList: [],
-  enemiesList: []
+  fighters: []
 }, {...mockReducer});
 
 export const appReducer = (state=initialState, action) => {
@@ -24,9 +22,12 @@ export const appReducer = (state=initialState, action) => {
   }
 
   else if (action.type === MODIFY_ATTRIBUTE) {
-    let clonedState = clone(state);
-    clonedState.fighters[action.fighterId][action.attribute] = action.amount;
-    return Object.assign({}, state, {...clonedState});
+    // modify attributes of one fighter
+    const allFighters = modifyAttr(state, action)
+    return {
+      ...state,
+      fighters: allFighters
+    }
   }
 
   else if (action.type === ADD_FRAME) {
@@ -51,10 +52,19 @@ export const appReducer = (state=initialState, action) => {
 
 function addApPoints(clonedState) {
   // Add action points
-  const listAll = [...clonedState.alliesList, ...clonedState.enemiesList];
-  listAll.forEach((fighterId) => {
-    clonedState.fighters[fighterId].ap = clonedState.fighters[fighterId].ap + clonedState.fighters[fighterId].stats.speed;
+  clonedState.fighters.forEach((fighter) => {
+    fighter.ap += fighter.stats.speed;
   })
   clonedState.currentFrame++;
   return clonedState
+}
+
+function modifyAttr(state, action) {
+  let clonedStateFighters = clone(state.fighters);
+  clonedStateFighters.forEach(fighter => {
+    if (fighter.id === action.fighter.id) {
+      fighter[action.attribute] = action.amount;
+    }
+  })
+  return clonedStateFighters
 }

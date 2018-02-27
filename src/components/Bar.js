@@ -13,9 +13,8 @@ export class Bar extends Component {
 
   componentDidUpdate() {
     if (this.props.type === 'ap' && this.props.amount >= 100 && this.props.frameRunning) {
-      this.props.dispatch(addLogEntry("Max AP reached for " + this.props.ownerName));
       this.props.dispatch(toggleFrameRunning(false));
-      this.props.dispatch(startTurn(this.props));
+      this.props.dispatch(startTurn(this.props.fighters, this.props.ownerId));
     }
   }
 

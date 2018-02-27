@@ -1,6 +1,7 @@
 export const mockReducer = {
-  fighters: {
-    11: {
+  fighters: [
+    {
+      id: 11,
       side: 'ally',
       name: 'A number 1',
       hp: 54,
@@ -12,10 +13,11 @@ export const mockReducer = {
         maxMp: 73
       }
     },
-    22: {
+    {
+      id: 22,
       side: 'ally',
       name: 'A number 2',
-      hp: 32,
+      hp: 92,
       rp: 27,
       ap: 42,
       stats: {
@@ -23,7 +25,8 @@ export const mockReducer = {
         maxHp: 97
       }
     },
-    66: {
+    {
+      id: 66,
       side: 'enemy',
       name: 'E number 1',
       hp: 34,
@@ -35,7 +38,8 @@ export const mockReducer = {
         maxMp: 120
       }
     },
-    77: {
+    {
+      id: 77,
       side: 'enemy',
       name: 'E number 2',
       hp: 72,
@@ -46,7 +50,5 @@ export const mockReducer = {
         maxHp: 112
       }
     }
-  },
-  alliesList: [11, 22],
-  enemiesList: [66, 77]
+  ]
 };
