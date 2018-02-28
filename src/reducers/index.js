@@ -53,7 +53,7 @@ export const appReducer = (state=initialState, action) => {
 function addApPoints(clonedState) {
   // Add action points
   clonedState.fighters.forEach((fighter) => {
-    fighter.ap += fighter.stats.speed;
+    fighter.ap += fighter.stats.speed*3;
   })
   clonedState.currentFrame++;
   return clonedState

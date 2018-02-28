@@ -1,0 +1,23 @@
+.enemies-container {
+  margin: auto;
+  display: inline-block;
+  width: $fighterFrameWidth;
+}
+
+.fighter-ally {
+  text-align: center;
+  margin: 8px 0;
+}
+
+.fighter-image {
+  background-color: #c1e0f0;
+  border: 1px solid black;
+  width: $fighterFrameWidth;
+  line-height: $fighterFrameWidth;
+}
+
+.allies-container {
+  margin: auto;
+  display: inline-block;
+  width: $fighterFrameWidth;
+}

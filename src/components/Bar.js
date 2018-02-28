@@ -6,12 +6,14 @@ import SvgBarChange from './SvgBarChange';
 export class Bar extends Component {
 
   componentWillMount() {
-    this.changedBarValue = 0;
     this.formerValue = 0;
     this.newValue = 0;
+    this.differenceValue = 0;
+    this.changeType = ''; // damage or heal
   }
 
   componentDidUpdate() {
+    // Check if a fighter is over 100 AP
     if (this.props.type === 'ap' && this.props.amount >= 100 && this.props.frameRunning) {
       this.props.dispatch(toggleFrameRunning(false));
       this.props.dispatch(startTurn(this.props.fighters, this.props.ownerId));
@@ -32,18 +34,39 @@ export class Bar extends Component {
   }
 
   triggerBarChangeAnimation(formerValue, newValue) {
-    if (formerValue >= newValue) {
-      this.changedBarValue = (formerValue/this.props.maxAmount)*100;
-      this.formerValue = (formerValue/this.props.maxAmount)*100;
-      this.newValue = (newValue/this.props.maxAmount)*100;
-      const rate = (formerValue - newValue)/20;
+    const rate = (formerValue - newValue)/20;
+    // if value lost
+    if (formerValue > newValue) {
+      this.changeType = 'dmg';
+      this.formerValue = (formerValue/this.props.maxAmount)*100; // former percent value
+      this.newValue = (newValue/this.props.maxAmount)*100; // new percent value
+      this.differenceValue = this.formerValue - this.newValue; // difference percent value
       setTimeout(() => {
         let timerChange = setInterval(() => {
-          this.changedBarValue -= rate;
-          if(this.changedBarValue <= this.newValue || this.changedBarValue <= 0 || this.changedBarValue > this.props.maxAmount) {
-            this.changedBarValue = 0;
+          this.differenceValue -= rate;
+          if (this.formerValue <= this.newValue || this.differenceValue <= 0 || this.differenceValue > this.props.maxAmount) {
             this.formerValue = 0;
             this.newValue = 0;
+            this.differenceValue = 0;
+            this.forceUpdate();
+            clearInterval(timerChange);
+          }
+          this.forceUpdate();
+        }, 15)
+      }, 700);
+    // else if value gained
+  } else if (formerValue < newValue) {
+      this.changeType = 'heal';
+      this.formerValue = (formerValue/this.props.maxAmount)*100; // former percent value
+      this.newValue = (newValue/this.props.maxAmount)*100; // new percent value
+      this.differenceValue = -(this.formerValue - this.newValue); // difference percent value
+      setTimeout(() => {
+        let timerChange = setInterval(() => {
+          this.differenceValue += rate;
+          if (this.formerValue >= this.newValue || this.differenceValue <= 0 || this.differenceValue > this.props.maxAmount) {
+            this.formerValue = 0;
+            this.newValue = 0;
+            this.differenceValue = 0;
             this.forceUpdate();
             clearInterval(timerChange);
           }
@@ -72,7 +95,12 @@ export class Bar extends Component {
           {Math.round(this.props.amount)} / {Math.round(this.props.maxAmount)} {this.props.type.toUpperCase()}
         </div>
         <div className={"bar-svg-changing " + this.props.classBarSide}>
-          <SvgBarChange barWidth={this.changedBarValue} />
+          <SvgBarChange
+            barWidth={this.differenceValue}
+            decal={this.newValue}
+            type={this.changeType}
+            side={this.props.classBarSide}
+          />
         </div>
         <div className={"bar-svg " + this.props.classBarSide}>
           <svg width={((this.props.amount/this.props.maxAmount)*100) + '%'} height="100%">
