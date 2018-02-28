@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import Bar from './Bar';
+import BuffIcons from './BuffIcons';
 
 class Fighter extends Component {
 
@@ -45,11 +46,25 @@ class Fighter extends Component {
     return bars
   }
 
+  renderSkillsBar() {
+    console.log(this.props.fighter.side)
+    const skills =  this.props.fighter.skills.map((s, i) => {
+      return (<div className="skill-icon" key={i}>
+        {i+1}
+      </div>)
+    })
+    return skills
+  }
+
   render() {
     return (
       <div className="fighter-ally">
         <div className="fighter-image">
+          <BuffIcons fighter={this.props.fighter} />
           {this.props.fighter.name}
+        </div>
+        <div className="skills-bar">
+          {this.renderSkillsBar()}
         </div>
         {this.renderBars()}
       </div>

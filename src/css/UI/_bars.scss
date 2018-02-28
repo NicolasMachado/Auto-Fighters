@@ -1,5 +1,6 @@
 // Bars
 .bar {
+  box-sizing: border-box;
   text-shadow: 1px 1px #000;
   color: #fff;
   width: 100%;
@@ -22,7 +23,7 @@
   position: relative;
   top: -$barHeight;
   text-align: left;
-  height: $barHeight;
+  height: calc(#{$barHeight} - 1px);
   &.enemy-bar {
     text-align: right;
   }

@@ -4,6 +4,12 @@
   width: $fighterFrameWidth;
 }
 
+.allies-container {
+  margin: auto;
+  display: inline-block;
+  width: $fighterFrameWidth;
+}
+
 .fighter-ally {
   text-align: center;
   margin: 8px 0;
@@ -14,10 +20,35 @@
   border: 1px solid black;
   width: $fighterFrameWidth;
   line-height: $fighterFrameWidth;
+  position: relative;
 }
 
-.allies-container {
-  margin: auto;
-  display: inline-block;
-  width: $fighterFrameWidth;
+.buff-icons {
+  position: absolute;
+  height: 30px;
+  line-height: 30px;
+  text-align: right;
+  background-color: rgba(0, 0,0, 0.1);
+  padding-right: 10px;
+  width: 100%;
+  bottom: 0px;
+}
+
+.skills-bar {
+  background-color: #333;
+  text-align: left;
+  width: 100%;
+  height: $skillIconHeight;
+  border-bottom: 1px black solid;
+  border-left: 1px black solid;
+  border-right: 1px black solid;
+}
+
+.skill-icon {
+  float: left;
+  padding-left: $skillIconHeight/9;
+  height: calc(#{$skillIconHeight} - 1px);
+  background-color: green;
+  width: $fighterFrameWidth/4;
+  border: 3px solid #222;
 }

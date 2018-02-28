@@ -1,6 +1,6 @@
 import {TOGGLE_FRAME_RUNNING, ADD_FRAME, ADD_LOG_ENTRY, MODIFY_ATTRIBUTE} from '../actions';
 import clone from 'clone';
-import {mockReducer} from '../mockData';
+import {mockReducer} from '../js/mockData';
 
 export const initialState = Object.assign({
   titleGame: 'AF',

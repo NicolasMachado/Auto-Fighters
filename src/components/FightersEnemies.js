@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import {renderFighterFrame} from '../common';
+import {renderFighterFrame} from '../js/common';
 
 class FightersEnemies extends Component {
 

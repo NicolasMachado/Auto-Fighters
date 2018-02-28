@@ -11,7 +11,8 @@ export const mockReducer = {
         speed: 1.2,
         maxHp: 123,
         maxMp: 73
-      }
+      },
+      skills: [1]
     },
     {
       id: 22,
@@ -23,7 +24,8 @@ export const mockReducer = {
       stats: {
         speed: .5,
         maxHp: 97
-      }
+      },
+      skills: []
     },
     {
       id: 66,
@@ -36,7 +38,8 @@ export const mockReducer = {
         speed: .7,
         maxHp: 241,
         maxMp: 120
-      }
+      },
+      skills: [1, 1, 1, 1]
     },
     {
       id: 77,
@@ -48,7 +51,8 @@ export const mockReducer = {
       stats: {
         speed: 1.5,
         maxHp: 112
-      }
+      },
+      skills: []
     }
   ]
 };

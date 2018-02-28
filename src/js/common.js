@@ -1,5 +1,5 @@
 import React from 'react';
-import Fighter from './components/Fighter';
+import Fighter from '../components/Fighter';
 
 // common function displaying fighters frames
 export function renderFighterFrame(allFightersList, side) {
